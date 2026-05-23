@@ -1,0 +1,1685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Remediation Group | Evidence-Governed Autonomous IT Remediation Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+:root{
+  /* AI Remediation Group  Light Violet / Purple theme */
+  --blue:#6B3FA0;
+  --blue-light:#8B5CC8;
+  --blue-dim:#5A2E90;
+  --blue-dark:#3D1A6E;
+  --blue-deeper:#260E4A;
+
+  --accent:#A78BFA;
+  --accent-light:#EDE9FE;
+  --accent-dim:#C4B5FD;
+
+  /* Nav / Footer BG  Deep Violet */
+  --nav-bg:#6B3FA0;
+  --footer-bg:#3D1A6E;
+
+  /* Page Backgrounds  White & light lavender */
+  --bg-white:#FFFFFF;
+  --bg-light:#F5F3FF;
+  --bg-section:#EDE9FE;
+  --bg-card:#FFFFFF;
+
+  --card-border:rgba(107,63,160,0.18);
+  --card-border-strong:rgba(107,63,160,0.38);
+
+  --text-dark:#1A0A30;
+  --text-mid:#3D2060;
+  --text-muted:#6B4A90;
+  --text-light:#9B7AB0;
+  --white:#FFFFFF;
+
+  --nav-h:72px;
+  --max-w:1200px;
+  --font:'Plus Jakarta Sans',sans-serif;
+  --display:'Sora',sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+  --ease:cubic-bezier(0.4,0,0.2,1);
+  --ease-out:cubic-bezier(0,0,0.2,1);
+}
+
+body{font-family:var(--font);color:var(--text-dark);background:var(--bg-white);overflow-x:hidden;}
+
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--bg-light);}
+::-webkit-scrollbar-thumb{background:var(--blue);border-radius:2px;}
+
+img{display:block;max-width:100%;}
+
+/* ─── NAVBAR ─────────────────────────────────────────── */
+.navbar{
+  position:fixed;top:0;left:0;width:100%;height:var(--nav-h);
+  background:var(--nav-bg);backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,255,255,0.2);
+  z-index:1000;display:flex;align-items:center;
+  padding:0 clamp(16px,5vw,60px);
+  justify-content:space-between;
+  transition:border-color 0.3s;
+  box-shadow:0 2px 24px rgba(107,63,160,0.4);
+}
+.nav-logo{
+  font-family:var(--display);font-size:18px;font-weight:800;
+  color:var(--white);letter-spacing:-0.3px;
+  display:flex;align-items:center;gap:12px;
+  cursor:pointer;text-decoration:none;flex-shrink:0;
+}
+.nav-logo-icon{
+  width:40px;height:40px;
+  background:rgba(255,255,255,0.2);
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  box-shadow:0 4px 14px rgba(0,0,0,0.15);
+  border:1px solid rgba(255,255,255,0.3);
+}
+.nav-logo-icon svg{width:22px;height:22px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.nav-logo-text{display:flex;flex-direction:column;line-height:1;}
+.nav-logo-text span{font-size:10px;font-family:var(--mono);font-weight:500;color:rgba(255,255,255,0.7);letter-spacing:2px;text-transform:uppercase;margin-top:3px;}
+
+.nav-links{display:flex;align-items:center;gap:4px;list-style:none;}
+.nav-links li button{
+  background:none;border:none;
+  color:rgba(255,255,255,0.85);
+  font-size:11px;font-weight:600;
+  padding:8px 14px;border-radius:7px;
+  transition:all 0.22s var(--ease);
+  cursor:pointer;font-family:var(--mono);
+  letter-spacing:0.8px;text-transform:uppercase;
+  position:relative;white-space:nowrap;
+}
+.nav-links li button:hover{color:#fff;background:rgba(255,255,255,0.15);}
+.nav-links li button.active{color:#fff;background:rgba(255,255,255,0.2);}
+.nav-links li button.active::after{
+  content:'';position:absolute;bottom:5px;left:50%;
+  transform:translateX(-50%);width:14px;height:2px;
+  background:var(--white);border-radius:2px;
+}
+
+.nav-right{display:flex;align-items:center;gap:10px;}
+.btn-demo-nav{
+  background:var(--white);
+  color:var(--blue-dark);border:none;padding:9px 20px;border-radius:8px;
+  font-size:11px;font-weight:700;cursor:pointer;
+  transition:all 0.22s;font-family:var(--mono);
+  letter-spacing:0.8px;text-transform:uppercase;white-space:nowrap;
+  box-shadow:0 2px 10px rgba(0,0,0,0.15);
+}
+.btn-demo-nav:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,0,0,0.25);background:var(--accent-light);}
+
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;background:none;border:none;flex-shrink:0;}
+.hamburger span{width:22px;height:2px;background:#fff;border-radius:2px;transition:0.3s;display:block;}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+.mobile-nav{
+  display:none;position:fixed;top:var(--nav-h);left:0;width:100%;
+  background:var(--blue-dark);backdrop-filter:blur(20px);
+  padding:12px 20px 20px;flex-direction:column;gap:2px;
+  z-index:999;border-bottom:1px solid rgba(255,255,255,0.1);
+  animation:slideDown 0.25s var(--ease-out);
+}
+@keyframes slideDown{from{opacity:0;transform:translateY(-10px);}to{opacity:1;transform:translateY(0);}}
+.mobile-nav.open{display:flex;}
+.mobile-nav button{
+  background:none;border:none;color:rgba(255,255,255,0.8);
+  font-size:13px;font-weight:600;padding:13px 12px;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  cursor:pointer;font-family:var(--mono);text-align:left;
+  text-transform:uppercase;letter-spacing:1px;
+  transition:color 0.2s,background 0.2s;border-radius:6px;
+}
+.mobile-nav button:hover{color:#fff;background:rgba(255,255,255,0.1);}
+.mobile-nav .mob-cta{
+  margin-top:8px;background:var(--white);
+  color:var(--blue-dark);border:none;padding:13px;
+  border-radius:8px;font-weight:700;font-size:12px;
+  letter-spacing:1px;text-transform:uppercase;cursor:pointer;
+  font-family:var(--mono);
+}
+
+/* ─── PAGE SYSTEM ─────────────────────────────────────── */
+.page{display:none;min-height:100vh;padding-top:var(--nav-h);}
+.page.active{display:block;animation:pgIn 0.35s var(--ease);}
+@keyframes pgIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* ─── SECTION COMMONS ─────────────────────────────────── */
+.label-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:10px;font-weight:600;
+  letter-spacing:3px;text-transform:uppercase;
+  color:var(--blue-dim);margin-bottom:14px;
+}
+.label-tag::before{content:'';width:20px;height:1px;background:var(--blue);}
+.label-tag-white{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:10px;font-weight:600;
+  letter-spacing:3px;text-transform:uppercase;
+  color:rgba(255,255,255,0.8);margin-bottom:14px;
+}
+.label-tag-white::before{content:'';width:20px;height:1px;background:rgba(255,255,255,0.6);}
+
+.section-h2{
+  font-family:var(--display);font-size:clamp(28px,3.5vw,52px);
+  font-weight:800;line-height:1.1;letter-spacing:-0.8px;
+  margin-bottom:10px;
+}
+.section-h2.blue-txt{color:var(--blue-dark);}
+.section-h2.dark{color:var(--text-dark);}
+.section-h2.white{color:var(--white);}
+
+.section-divider{width:56px;height:3px;margin:16px 0 28px;border-radius:2px;}
+.divider-blue{background:linear-gradient(90deg,var(--blue),transparent);}
+.divider-white{background:linear-gradient(90deg,rgba(255,255,255,0.8),transparent);}
+.divider-center{margin:16px auto 28px;}
+
+.para-dark{color:var(--text-mid);line-height:1.85;font-size:17px;}
+.para-light{color:rgba(255,255,255,0.85);line-height:1.85;font-size:17px;}
+
+.container{max-width:900px;margin:0 auto;padding:0 clamp(16px,4vw,60px);}
+
+/* ─── BUTTONS ─────────────────────────────────────────── */
+.btn-primary{
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,var(--blue),var(--blue-dark));
+  color:var(--white);padding:13px 28px;border-radius:8px;
+  text-decoration:none;font-weight:700;font-size:12px;
+  letter-spacing:0.8px;text-transform:uppercase;
+  transition:all 0.25s;font-family:var(--mono);border:none;cursor:pointer;
+  box-shadow:0 4px 16px rgba(107,63,160,0.35);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(107,63,160,0.5);}
+
+.btn-secondary{
+  display:inline-flex;align-items:center;gap:8px;
+  border:1.5px solid var(--blue);color:var(--blue-dark);
+  padding:12px 28px;border-radius:8px;text-decoration:none;
+  font-weight:700;font-size:12px;letter-spacing:0.8px;
+  text-transform:uppercase;transition:all 0.25s;
+  font-family:var(--mono);background:none;cursor:pointer;
+}
+.btn-secondary:hover{background:rgba(107,63,160,0.08);border-color:var(--blue-dim);}
+
+.btn-white{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--white);color:var(--blue-dark);
+  padding:12px 28px;border-radius:8px;
+  font-weight:700;font-size:12px;letter-spacing:0.8px;
+  text-transform:uppercase;transition:all 0.25s;
+  font-family:var(--mono);border:none;cursor:pointer;
+  box-shadow:0 4px 16px rgba(0,0,0,0.12);
+}
+.btn-white:hover{transform:translateY(-2px);background:var(--accent-light);box-shadow:0 8px 28px rgba(0,0,0,0.2);}
+
+/* ─── STATUS BADGES ─────────────────────────────── */
+.risk-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:3px 10px;border-radius:20px;
+  font-size:10px;font-weight:700;font-family:var(--mono);letter-spacing:0.5px;
+}
+.risk-blue{background:rgba(107,63,160,0.1);color:var(--blue-dim);border:1px solid rgba(107,63,160,0.28);}
+.risk-light{background:rgba(167,139,250,0.2);color:var(--blue-dark);border:1px solid rgba(107,63,160,0.25);}
+.risk-green{background:rgba(16,185,129,0.1);color:#059669;border:1px solid rgba(16,185,129,0.25);}
+.risk-dot{width:5px;height:5px;border-radius:50%;background:currentColor;flex-shrink:0;}
+
+/* ─── HERO ─────────────────────────────────────────────── */
+.hero{
+  background:linear-gradient(140deg,#F5F3FF 0%,#EDE9FE 40%,#DDD6FE 100%);
+  padding:clamp(60px,10vw,100px) 0 clamp(50px,8vw,80px);
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;top:-80px;right:-80px;
+  width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,rgba(107,63,160,0.12) 0%,transparent 70%);
+}
+.hero-inner{
+  max-width:900px;margin:0 auto;
+  padding:0 clamp(16px,4vw,60px);
+  display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,80px);
+  align-items:center;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(107,63,160,0.12);border:1px solid rgba(107,63,160,0.3);
+  border-radius:30px;padding:6px 16px;
+  font-family:var(--mono);font-size:10px;font-weight:700;
+  color:var(--blue-dim);letter-spacing:1.5px;text-transform:uppercase;
+  margin-bottom:22px;
+}
+.hero-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--blue);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+h1{
+  font-family:var(--display);font-size:clamp(34px,5vw,60px);
+  font-weight:800;line-height:1.06;letter-spacing:-1.5px;color:var(--text-dark);
+  margin-bottom:6px;
+}
+h1 .blue{color:var(--blue);}
+h1 .dark-blue{color:var(--blue-dark);}
+.hero-rule{width:48px;height:3px;background:linear-gradient(90deg,var(--blue),var(--blue-light));border-radius:2px;margin:20px 0;}
+.hero-body{font-size:17px;color:var(--text-mid);line-height:1.8;margin-bottom:28px;max-width:540px;}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;}
+
+.hero-mini-stats{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap;}
+.hero-mini-card{
+  background:rgba(255,255,255,0.8);
+  border:1px solid rgba(107,63,160,0.2);
+  border-radius:12px;padding:14px 18px;min-width:130px;
+  backdrop-filter:blur(8px);
+}
+.hero-mini-card strong{
+  display:block;font-family:var(--display);
+  font-size:22px;font-weight:800;color:var(--blue-dark);
+}
+.hero-mini-card span{font-size:11px;color:var(--text-muted);font-family:var(--mono);}
+
+/* DASHBOARD CARD */
+.score-card{
+  background:#fff;border-radius:18px;
+  border:1px solid rgba(107,63,160,0.18);
+  padding:24px;box-shadow:0 8px 40px rgba(107,63,160,0.12);
+}
+.score-card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;}
+.score-card-label{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px;}
+.dashboard-title{font-family:var(--display);font-size:17px;font-weight:700;color:var(--text-dark);}
+.live-dot-wrap{display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:9px;font-weight:700;color:var(--blue);letter-spacing:1.5px;}
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--blue);animation:pulse 1.5s infinite;}
+.score-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(107,63,160,0.08);}
+.score-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:9px;font-weight:700;flex-shrink:0;}
+.score-icon.blue-bg{background:rgba(107,63,160,0.12);color:var(--blue-dim);}
+.score-icon.light-bg{background:rgba(167,139,250,0.2);color:var(--blue-dark);}
+.score-icon.green-bg{background:rgba(16,185,129,0.1);color:#059669;}
+.score-lbl{flex:1;font-size:12px;color:var(--text-muted);}
+.score-val{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--text-dark);}
+.score-big{display:flex;align-items:center;gap:16px;margin-top:18px;padding:16px;background:linear-gradient(135deg,rgba(107,63,160,0.08),rgba(167,139,250,0.15));border-radius:12px;border:1px solid rgba(107,63,160,0.15);}
+.score-big-num{font-family:var(--display);font-size:48px;font-weight:800;color:var(--blue);line-height:1;}
+.score-big-info .label{font-size:13px;font-weight:700;color:var(--text-dark);}
+.score-big-info .sub{font-size:11px;color:var(--text-muted);margin-top:3px;font-family:var(--mono);}
+
+/* ─── STATS STRIP ─────────────────────────────────────── */
+.section-blue{
+  background:linear-gradient(135deg,var(--blue-dark) 0%,var(--blue-deeper) 100%);
+  padding:clamp(60px,8vw,96px) 0;
+}
+.stats-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:48px;
+}
+.stat-card{
+  background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);
+  border-radius:16px;padding:clamp(20px,3vw,30px);
+  text-align:center;transition:transform 0.25s,border-color 0.25s;
+}
+.stat-card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,0.3);}
+.stat-num{font-family:var(--display);font-size:clamp(32px,4vw,48px);font-weight:800;color:#fff;margin-bottom:10px;}
+.stat-lbl{font-size:13px;color:rgba(255,255,255,0.75);line-height:1.6;}
+
+/* ─── PLATFORM SECTION ─────────────────────────────────── */
+.platform-section{background:var(--bg-white);padding:clamp(60px,8vw,96px) 0;}
+.platform-sub{max-width:760px;margin-bottom:44px;color:var(--text-mid);}
+.platform-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+.platform-card{
+  background:#fff;border:1px solid rgba(107,63,160,0.15);
+  border-radius:18px;overflow:hidden;
+  transition:border-color 0.3s,box-shadow 0.3s,transform 0.3s;
+  box-shadow:0 2px 12px rgba(107,63,160,0.06);
+}
+.platform-card:hover{border-color:rgba(107,63,160,0.35);box-shadow:0 12px 40px rgba(107,63,160,0.12);transform:translateY(-3px);}
+.platform-img-wrap{width:100%;height:180px;overflow:hidden;background:linear-gradient(135deg,var(--bg-light),var(--bg-section));}
+.platform-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s var(--ease);}
+.platform-card:hover .platform-img-wrap img{transform:scale(1.04);}
+.platform-card .inner{padding:24px;}
+.element-badge{
+  display:inline-block;font-family:var(--mono);font-size:9px;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;
+  color:var(--blue-dim);background:rgba(107,63,160,0.08);
+  border:1px solid rgba(107,63,160,0.2);
+  padding:3px 10px;border-radius:20px;margin-bottom:12px;
+}
+.platform-card h3{font-family:var(--display);font-size:18px;font-weight:700;color:var(--text-dark);margin-bottom:10px;line-height:1.3;}
+.platform-card p{font-size:14px;color:var(--text-muted);line-height:1.7;}
+.more-text{font-size:14px;color:var(--text-mid);line-height:1.7;margin-top:12px;display:none;}
+.platform-card.open .more-text{display:block;}
+.expand-btn{
+  display:inline-flex;align-items:center;gap:5px;
+  margin-top:16px;font-family:var(--mono);font-size:10px;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;
+  color:var(--blue);background:none;border:none;cursor:pointer;
+  padding:0;transition:color 0.2s;
+}
+.expand-btn:hover{color:var(--blue-dark);}
+
+/* ─── SECTION LIGHT ─────────────────────────────────────── */
+.section-light{background:var(--bg-light);padding:clamp(60px,8vw,96px) 0;}
+
+/* ─── PROCESS ─────────────────────────────────────────── */
+.process-section{background:var(--bg-white);padding:clamp(60px,8vw,96px) 0;}
+.process-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:40px;}
+.process-card{
+  background:#fff;border:1px solid rgba(107,63,160,0.15);
+  border-radius:18px;padding:28px;
+  transition:border-color 0.3s,box-shadow 0.3s,transform 0.3s;
+  box-shadow:0 2px 12px rgba(107,63,160,0.06);
+  position:relative;
+}
+.process-card:hover{border-color:rgba(107,63,160,0.35);box-shadow:0 12px 40px rgba(107,63,160,0.12);transform:translateY(-3px);}
+.process-num{
+  font-family:var(--display);font-size:48px;font-weight:800;
+  color:rgba(107,63,160,0.1);position:absolute;top:16px;right:20px;line-height:1;
+}
+.process-icon{
+  width:48px;height:48px;border-radius:12px;
+  background:linear-gradient(135deg,var(--blue),var(--blue-dark));
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:18px;
+}
+.process-icon i{color:#fff;font-size:20px;}
+.process-card h3{font-family:var(--display);font-size:18px;font-weight:700;color:var(--text-dark);margin-bottom:10px;}
+.process-card p{font-size:14px;color:var(--text-muted);line-height:1.7;}
+
+/* ─── ABOUT / FOUNDER ─────────────────────────────────── */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,80px);align-items:center;margin-top:48px;}
+.about-img-wrap{
+  border-radius:20px;overflow:hidden;
+  box-shadow:0 20px 60px rgba(107,63,160,0.2);
+  border:2px solid rgba(107,63,160,0.2);
+  background:linear-gradient(135deg,var(--bg-light),var(--bg-section));
+  height:420px;
+}
+.about-img-wrap img{width:100%;height:100%;object-fit:cover;}
+.founder-name{font-family:var(--display);font-size:32px;font-weight:800;color:var(--text-dark);margin-bottom:4px;}
+.founder-role{font-family:var(--mono);font-size:11px;color:var(--blue);letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;}
+.skill-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
+.skill-chip{
+  background:var(--bg-section);border:1px solid rgba(107,63,160,0.25);
+  border-radius:20px;padding:5px 12px;
+  font-family:var(--mono);font-size:10px;font-weight:600;
+  color:var(--blue-dim);letter-spacing:0.5px;
+}
+
+/* ─── PRICING ─────────────────────────────────────────── */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px;}
+.price-card{
+  background:#fff;border:1px solid rgba(107,63,160,0.18);
+  border-radius:20px;padding:32px;
+  transition:transform 0.3s,box-shadow 0.3s,border-color 0.3s;
+  box-shadow:0 2px 12px rgba(107,63,160,0.06);
+}
+.price-card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(107,63,160,0.14);}
+.price-card.featured{
+  border:2px solid var(--blue);
+  background:linear-gradient(140deg,#F5F3FF 0%,#FFFFFF 100%);
+  position:relative;
+}
+.featured-badge{
+  position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+  background:linear-gradient(135deg,var(--blue),var(--blue-dark));
+  color:#fff;font-family:var(--mono);font-size:9px;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;
+  padding:4px 16px;border-radius:20px;white-space:nowrap;
+}
+.price-tier{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--blue-dim);margin-bottom:8px;}
+.price-amount{font-family:var(--display);font-size:40px;font-weight:800;color:var(--text-dark);line-height:1;}
+.price-amount span{font-size:18px;font-weight:500;color:var(--text-muted);}
+.price-sub{font-size:13px;color:var(--text-muted);margin-top:4px;margin-bottom:24px;font-family:var(--mono);}
+.price-feature{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:13px;color:var(--text-mid);margin-bottom:10px;line-height:1.5;
+}
+.price-feature i{color:var(--blue);margin-top:2px;flex-shrink:0;font-size:13px;}
+.price-divider{border:none;border-top:1px solid rgba(107,63,160,0.1);margin:20px 0;}
+
+/* ─── MARKET ─────────────────────────────────────────── */
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:40px;}
+.chart-box{
+  background:#fff;border:1px solid rgba(107,63,160,0.15);
+  border-radius:16px;padding:24px;
+  box-shadow:0 2px 12px rgba(107,63,160,0.06);
+}
+.chart-box h4{font-family:var(--display);font-size:16px;font-weight:700;color:var(--text-dark);margin-bottom:4px;}
+.chart-box p{font-size:12px;color:var(--text-muted);margin-bottom:16px;font-family:var(--mono);}
+.chart-box canvas{height:240px!important;}
+
+/* ─── FAQ ─────────────────────────────────────────────── */
+.faq-item{border-bottom:1px solid rgba(107,63,160,0.12);overflow:hidden;}
+.faq-q{
+  width:100%;background:none;border:none;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 0;cursor:pointer;
+  font-family:var(--font);font-size:16px;font-weight:600;color:var(--text-dark);
+  text-align:left;gap:16px;
+  transition:color 0.2s;
+}
+.faq-q:hover{color:var(--blue);}
+.faq-icon{
+  width:28px;height:28px;border-radius:50%;
+  background:rgba(107,63,160,0.1);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:transform 0.3s,background 0.2s;
+}
+.faq-icon i{font-size:12px;color:var(--blue);transition:transform 0.3s;}
+.faq-item.open .faq-icon{background:var(--blue);}
+.faq-item.open .faq-icon i{color:#fff;}
+.faq-a{
+  font-size:14px;color:var(--text-muted);line-height:1.8;
+  max-height:0;overflow:hidden;transition:max-height 0.4s var(--ease),padding 0.3s;
+  padding:0;
+}
+.faq-item.open .faq-a{max-height:300px;padding:0 0 20px;}
+
+/* ─── CONTACT ─────────────────────────────────────────── */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,80px);align-items:start;margin-top:48px;}
+.contact-info{display:flex;flex-direction:column;gap:24px;}
+.contact-info-card{
+  background:#fff;border:1px solid rgba(107,63,160,0.15);
+  border-radius:14px;padding:20px;
+  display:flex;align-items:flex-start;gap:14px;
+  box-shadow:0 2px 8px rgba(107,63,160,0.06);
+}
+.contact-info-icon{
+  width:40px;height:40px;border-radius:10px;
+  background:linear-gradient(135deg,var(--blue),var(--blue-dark));
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.contact-info-icon i{color:#fff;font-size:16px;}
+.contact-info-text strong{display:block;font-size:14px;font-weight:700;color:var(--text-dark);margin-bottom:4px;}
+.contact-info-text span{font-size:13px;color:var(--text-muted);}
+
+.contact-form-wrap{
+  background:#fff;border:1px solid rgba(107,63,160,0.15);
+  border-radius:20px;padding:32px;
+  box-shadow:0 8px 32px rgba(107,63,160,0.08);
+}
+.form-row{margin-bottom:20px;}
+.form-row label{display:block;font-size:12px;font-weight:700;color:var(--text-dark);margin-bottom:7px;font-family:var(--mono);letter-spacing:0.5px;text-transform:uppercase;}
+.form-row input,.form-row select,.form-row textarea{
+  width:100%;padding:12px 16px;border:1.5px solid rgba(107,63,160,0.2);
+  border-radius:8px;font-family:var(--font);font-size:14px;
+  color:var(--text-dark);background:#fff;
+  transition:border-color 0.2s,box-shadow 0.2s;outline:none;
+}
+.form-row input:focus,.form-row select:focus,.form-row textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(107,63,160,0.12);}
+.form-row textarea{resize:vertical;min-height:120px;}
+.form-submit-btn{
+  width:100%;background:linear-gradient(135deg,var(--blue),var(--blue-dark));
+  color:#fff;border:none;padding:15px;border-radius:10px;
+  font-family:var(--mono);font-size:12px;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;cursor:pointer;
+  transition:all 0.25s;box-shadow:0 4px 16px rgba(107,63,160,0.35);
+}
+.form-submit-btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(107,63,160,0.5);}
+
+/* ─── COMPLIANCE TABLE ─────────────────────────────────── */
+.compliance-table{width:100%;border-collapse:collapse;margin-top:28px;}
+.compliance-table th{
+  background:linear-gradient(135deg,var(--blue-dark),var(--blue-deeper));
+  color:#fff;font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  padding:12px 16px;text-align:left;
+}
+.compliance-table th:first-child{border-radius:8px 0 0 0;}
+.compliance-table th:last-child{border-radius:0 8px 0 0;}
+.compliance-table td{
+  padding:12px 16px;font-size:13px;color:var(--text-mid);
+  border-bottom:1px solid rgba(107,63,160,0.1);
+}
+.compliance-table tr:hover td{background:rgba(107,63,160,0.04);}
+
+/* ─── COMPETITOR TABLE ─────────────────────────────────── */
+.comp-table{width:100%;border-collapse:collapse;margin-top:28px;font-size:13px;}
+.comp-table th{background:var(--blue-dark);color:#fff;font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:12px 14px;text-align:left;}
+.comp-table td{padding:11px 14px;border-bottom:1px solid rgba(107,63,160,0.1);color:var(--text-mid);}
+.comp-table tr.highlight-row td{background:linear-gradient(90deg,rgba(107,63,160,0.06),rgba(167,139,250,0.06));font-weight:700;color:var(--blue-dark);}
+.comp-table tr:hover td{background:rgba(107,63,160,0.04);}
+
+/* ─── FOOTER ─────────────────────────────────────────── */
+footer{background:var(--footer-bg);padding:clamp(48px,8vw,80px) 0 0;}
+.footer-inner{
+  max-width:900px;margin:0 auto;padding:0 clamp(16px,4vw,60px);
+  display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:48px;
+}
+.footer-brand{max-width:300px;}
+.footer-logo{font-family:var(--display);font-size:20px;font-weight:800;color:#fff;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.footer-logo-icon{width:36px;height:36px;background:rgba(255,255,255,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.25);}
+.footer-logo-icon svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.footer-desc{font-size:14px;color:rgba(255,255,255,0.6);line-height:1.7;margin-bottom:20px;}
+.footer-badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;}
+.footer-badge{
+  background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);
+  border-radius:20px;padding:4px 12px;
+  font-family:var(--mono);font-size:9px;font-weight:600;
+  color:rgba(255,255,255,0.7);letter-spacing:1px;text-transform:uppercase;
+}
+.footer-col-title{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:16px;}
+.footer-col{display:flex;flex-direction:column;gap:10px;}
+.footer-col a{font-size:13px;color:rgba(255,255,255,0.65);text-decoration:none;transition:color 0.2s;cursor:pointer;}
+.footer-col a:hover{color:#fff;}
+.footer-bottom-bar{
+  max-width:900px;margin:48px auto 0;padding:20px clamp(16px,4vw,60px);
+  border-top:1px solid rgba(255,255,255,0.1);
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;
+}
+.footer-bottom-bar p{font-size:12px;color:rgba(255,255,255,0.45);font-family:var(--mono);}
+.footer-bottom-bar p span{color:rgba(255,255,255,0.7);}
+.footer-bottom-links{display:flex;gap:20px;}
+.footer-bottom-links a{font-size:12px;color:rgba(255,255,255,0.45);text-decoration:none;cursor:pointer;transition:color 0.2s;font-family:var(--mono);}
+.footer-bottom-links a:hover{color:#fff;}
+
+/* ─── RESPONSIVE ─────────────────────────────────────── */
+@media(max-width:900px){
+  .nav-links,.nav-right .btn-demo-nav{display:none;}
+  .hamburger{display:flex;}
+  .hero-inner,.about-grid,.contact-grid{grid-template-columns:1fr;}
+  .stats-grid,.platform-grid,.process-grid,.pricing-grid,.chart-grid{grid-template-columns:1fr 1fr;}
+  .footer-inner{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:600px){
+  .stats-grid,.platform-grid,.process-grid,.pricing-grid,.chart-grid{grid-template-columns:1fr;}
+  .footer-inner{grid-template-columns:1fr;}
+}
+
+/* ─── DESKTOP ENHANCEMENTS (1100px+) ─────────────────── */
+@media(min-width:1100px){
+  /* Wider content area */
+  .container,
+  .hero-inner,
+  .footer-inner,
+  .footer-bottom-bar{
+    max-width:1280px;
+  }
+
+  /* Navbar: more breathing room */
+  .navbar{padding:0 clamp(40px,5vw,80px);}
+  .nav-links{gap:6px;}
+  .nav-links li button{font-size:11.5px;padding:9px 16px;}
+
+  /* Hero: taller, more spacious */
+  .hero{padding:120px 0 100px;}
+  .hero-inner{gap:80px;align-items:center;}
+  h1{font-size:clamp(44px,4.5vw,68px);}
+  .hero-body{font-size:18px;max-width:560px;}
+  .hero-mini-stats{gap:18px;margin-top:40px;}
+  .hero-mini-card{padding:18px 24px;min-width:150px;}
+  .hero-mini-card strong{font-size:26px;}
+
+  /* Dashboard card: slightly larger */
+  .score-card{padding:30px;}
+  .score-big-num{font-size:56px;}
+
+  /* Stats grid: 4 cols (already default, but make cards bigger) */
+  .stats-grid{gap:30px;margin-top:56px;}
+  .stat-card{padding:36px 28px;}
+  .stat-num{font-size:clamp(38px,3.5vw,54px);}
+  .stat-lbl{font-size:14px;}
+
+  /* Platform / Process / Pricing: more gap */
+  .platform-grid{gap:36px;}
+  .platform-img-wrap{height:220px;}
+  .process-grid{gap:36px;}
+  .pricing-grid{gap:32px;}
+  .price-card{padding:40px 36px;}
+  .price-amount{font-size:48px;}
+
+  /* Charts */
+  .chart-grid{gap:36px;}
+  .chart-box{padding:32px;}
+  .chart-box canvas{height:280px!important;}
+
+  /* About */
+  .about-grid{gap:80px;}
+  .about-img-wrap{height:480px;}
+  .founder-name{font-size:38px;}
+
+  /* Contact */
+  .contact-grid{gap:80px;}
+  .contact-form-wrap{padding:40px;}
+
+  /* Footer */
+  .footer-inner{gap:60px;}
+  .footer-desc{font-size:15px;}
+
+  /* Typography scale-up */
+  .para-dark,.para-light{font-size:18px;}
+  .section-h2{font-size:clamp(34px,3vw,56px);}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ NAVBAR ═══════════ -->
+<nav class="navbar">
+  <a class="nav-logo" onclick="showPage('home')">
+    <div class="nav-logo-icon">
+      <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+    </div>
+    <div class="nav-logo-text">
+      AI Remediation Group
+      <span>Evidence-Governed IT Platform</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><button id="nav-home" onclick="showPage('home')" class="active">Home</button></li>
+    <li><button id="nav-platform" onclick="showPage('platform')">Platform</button></li>
+    <li><button id="nav-process" onclick="showPage('process')">How It Works</button></li>
+    <li><button id="nav-market" onclick="showPage('market')">Market</button></li>
+    <li><button id="nav-pricing" onclick="showPage('pricing')">Pricing</button></li>
+    <li><button id="nav-about" onclick="showPage('about')">About</button></li>
+    <li><button id="nav-faq" onclick="showPage('faq')">FAQ</button></li>
+    <li><button id="nav-contact" onclick="showPage('contact')">Contact</button></li>
+  </ul>
+  <div class="nav-right">
+    <button class="btn-demo-nav" onclick="showPage('contact')">Request Demo →</button>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ═══════════ MOBILE NAV ═══════════ -->
+<div class="mobile-nav" id="mobileNav">
+  <button onclick="showPage('home');closeMobile()">Home</button>
+  <button onclick="showPage('platform');closeMobile()">Platform</button>
+  <button onclick="showPage('process');closeMobile()">How It Works</button>
+  <button onclick="showPage('market');closeMobile()">Market</button>
+  <button onclick="showPage('pricing');closeMobile()">Pricing</button>
+  <button onclick="showPage('about');closeMobile()">About</button>
+  <button onclick="showPage('faq');closeMobile()">FAQ</button>
+  <button onclick="showPage('contact');closeMobile()">Contact</button>
+  <button class="mob-cta" onclick="showPage('contact');closeMobile()">Request Demo →</button>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE : HOME
+═══════════════════════════════════════════════ -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge">
+          <span class="hero-badge-dot"></span>
+          UK's First Evidence-Governed IT Remediation Platform
+        </div>
+        <h1>
+          Detect Faster.<br>
+          <span class="blue">Remediate</span> Smarter.
+          <span class="dark-blue">Risk Lower.</span>
+        </h1>
+        <div class="hero-rule"></div>
+        <p class="hero-body">
+          AI Remediation Group is an AI-powered ITSM platform that identifies IT issues, recommends the right actions, and automates remediation across systems, data, and processes  with full evidence-gating and governance compliance built in from day one.
+        </p>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="showPage('contact')">Book a Platform Demo</button>
+          <button class="btn-secondary" onclick="showPage('platform')">Explore Platform</button>
+        </div>
+        <div class="hero-mini-stats">
+          <div class="hero-mini-card"><strong>42%</strong><span>MTTR Reduction</span></div>
+          <div class="hero-mini-card"><strong>96.4%</strong><span>Remediation Accuracy</span></div>
+          <div class="hero-mini-card"><strong>93%</strong><span>Compliance Score</span></div>
+        </div>
+      </div>
+      <!-- DASHBOARD CARD -->
+      <div>
+        <div class="score-card">
+          <div class="score-card-top">
+            <div>
+              <div class="score-card-label">AI Remediation Group · Live Command Centre</div>
+              <h3 class="dashboard-title">AI Remediation Dashboard</h3>
+            </div>
+            <div class="live-dot-wrap"><span class="live-dot"></span>LIVE</div>
+          </div>
+          <div class="score-row">
+            <div class="score-icon blue-bg">TD</div>
+            <span class="score-lbl">Total Issues Detected</span>
+            <span class="score-val">1,248 ↑28%</span>
+          </div>
+          <div class="score-row">
+            <div class="score-icon green-bg">AR</div>
+            <span class="score-lbl">Auto-Remediated</span>
+            <span class="score-val">842 ↑35%</span>
+          </div>
+          <div class="score-row">
+            <div class="score-icon light-bg">RR</div>
+            <span class="score-lbl">Risk Reduced</span>
+            <span class="score-val">76% ↑18%</span>
+          </div>
+          <div class="score-row">
+            <div class="score-icon blue-bg">CS</div>
+            <span class="score-lbl">Compliance Score</span>
+            <span class="score-val">93% ↑6%</span>
+          </div>
+          <div class="score-big">
+            <div class="score-big-num">42<span style="font-size:24px;">%</span></div>
+            <div class="score-big-info">
+              <div class="label">Mean Time to Resolve Reduction</div>
+              <div class="sub">Evidence-Gated · AI Governed · Audit-Ready</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS STRIP -->
+  <section class="section-blue">
+    <div class="container">
+      <div class="label-tag-white">The UK IT Operations Crisis</div>
+      <h2 class="section-h2 white">UK Enterprises Are Losing Billions to<br>IT Operational Blind Spots.</h2>
+      <div class="section-divider divider-white"></div>
+      <p class="para-light" style="max-width:760px;">
+        The UK IT services market is valued at £120.11 billion yet it continues to struggle with a massive volume of manual incidents. The "Orchestration Gap"  where manual monitoring, ticket black-box opacity, and fragmented logs dominate  results in an estimated £157 billion in annual UK productivity losses. AI Remediation Group is the live evidence-governed infrastructure that turns fragmented IT data into a coordinated decision layer.
+      </p>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-num">£11K</div>
+          <div class="stat-lbl">Per minute of IT downtime  every minute of technical failure costs the average UK enterprise massively</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">47%</div>
+          <div class="stat-lbl">Of IT support tickets are submitted outside standard business hours, creating critical support gaps</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">22%</div>
+          <div class="stat-lbl">Of IT staff time wasted on repetitive Level-1 & Level-2 tasks that remain unaddressed by conventional automation</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">93%</div>
+          <div class="stat-lbl">Of successful cyberattacks begin with credential manipulation that current IT service desk tools fail to block</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLATFORM PREVIEW -->
+  <section class="platform-section">
+    <div class="container">
+      <div class="label-tag">Core Governance Modules</div>
+      <h2 class="section-h2 dark">Six Modules. One Complete Evidence-Governed Remediation OS.</h2>
+      <div class="section-divider divider-blue"></div>
+      <p class="para-dark platform-sub">
+        AI Remediation Group combines Smart Issue Detection, Root Cause Analysis, Risk-Based Prioritisation, Actionable Recommendations, Automated Remediation, and Continuous Compliance into one unified SaaS platform  evidence-gated, real-time, and audit-ready.
+      </p>
+      <div class="platform-grid">
+        <div class="platform-card">
+          <div class="platform-img-wrap">
+            <img src="ai1.jpg" alt="Smart Issue Detection">
+          </div>
+          <div class="inner">
+            <div class="element-badge">Module 01</div>
+            <h3>Smart Issue Detection</h3>
+            <p>Real-time telemetry ingestion and incident data parsing mapped into a machine-executable Incident Intermediate Representation (IIR).</p>
+            <div class="more-text">The platform ingests system logs, configuration databases (CMDB), and live telemetry to detect issues before they escalate. AI agents identify hardware failures (31% of downtime), software misconfigurations (27%), and identity-related human errors  autonomously and continuously, 24/7.</div>
+            <button class="expand-btn" onclick="toggleCard(this)">Learn More</button>
+          </div>
+        </div>
+        <div class="platform-card">
+          <div class="platform-img-wrap">
+            <img src="ai2.jpg" alt="Root Cause Analysis">
+          </div>
+          <div class="inner">
+            <div class="element-badge">Module 02</div>
+            <h3>Root Cause Analysis</h3>
+            <p>Automated root cause mapping links disparate symptoms across different silos to identify a single root cause in seconds.</p>
+            <div class="more-text">The system uses agentic reasoning to link a slow VPN and a cloud server spike to one root cause instantly. Proactive "Shadow-IT" Detection monitors telemetry patterns to predict and remediate issues before they trigger user-generated tickets.</div>
+            <button class="expand-btn" onclick="toggleCard(this)">Learn More</button>
+          </div>
+        </div>
+        <div class="platform-card">
+          <div class="platform-img-wrap">
+            <img src="ai3.jpg" alt="Evidence-Gated Remediation">
+          </div>
+          <div class="inner">
+            <div class="element-badge">Module 03</div>
+            <h3>Evidence-Gated Remediation</h3>
+            <p>The EGREE engine synthesizes multi-source evidence to validate ground truth before executing any fix  eliminating AI hallucinations.</p>
+            <div class="more-text">Unlike chatbots that act on confidence alone, EGREE requires multi-source triangulation  real-time telemetry, system logs, and CMDB data  before granting execution permission. False positive rate under 1% with Decoupled Confidence-Permission Control Logic.</div>
+            <button class="expand-btn" onclick="toggleCard(this)">Learn More</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /page-home -->
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE : PLATFORM
+═══════════════════════════════════════════════ -->
+<div class="page" id="page-platform">
+  <section style="background:linear-gradient(140deg,#F5F3FF 0%,#EDE9FE 60%,#DDD6FE 100%);padding:clamp(80px,12vw,120px) 0 clamp(60px,8vw,80px);">
+    <div class="container">
+      <div class="label-tag">Full Platform</div>
+      <h2 class="section-h2 dark">Six Intelligence Modules.<br><span style="color:var(--blue-dark);">One Agentic IT Remediation Command Centre.</span></h2>
+      <div class="section-divider divider-blue"></div>
+      <p class="para-dark" style="max-width:680px;margin-bottom:40px;">Every feature is built specifically for the high-pressure UK enterprise IT environment  not retrofitted from generic SaaS tools. Our proprietary Evidence-Gated Remediation Execution Engine and multi-agent coordination translate complex IT behaviours into actionable governance KPIs that operators actually need.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="showPage('contact')">Request Demo →</button>
+        <button class="btn-secondary" onclick="showPage('pricing')">View Pricing</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-light">
+    <div class="container">
+      <div class="platform-grid" style="grid-template-columns:repeat(2,1fr);gap:28px;">
+
+        <div class="platform-card">
+          <div class="platform-img-wrap" style="height:220px;">
+            <img src="ai4.jpg" alt="Smart Issue Detection" style="width:100%;height:100%;object-fit:cover;">
+          </div>
+          <div class="inner">
+            <div class="element-badge">Module 01 · Detection</div>
+            <h3>Smart Issue Detection & IIR Engine</h3>
+            <p>Real-time system telemetry ingestion and incident data parsing into machine-executable Incident Intermediate Representation (IIR). Detects 1,248 issues per cycle with 28% improvement vs last month.</p>
+            <div class="more-text">The platform continuously monitors hardware, software, and identity layers. Issues are classified by severity  High (28%), Medium (47%), Low (25%)  and mapped to infrastructure state. Top categories: Access & Identity (32%), Data Quality (24%), Config Drift (18%), Policy Violations (15%).</div>
+            <button class="expand-btn" onclick="toggleCard(this)">Learn More</button>
+          </div>
+        </div>
+
+        <div class="platform-card">
+          <div class="platform-img-wrap" style="height:220px;">
+            <img src="ai5.jpg" alt="Root Cause Analysis" style="width:100%;height:100%;object-fit:cover;">
+          </div>
+          <div class="inner">
+            <div class="element-badge">Module 02 · Analysis</div>
+            <h3>Automated Root Cause Analysis & Shadow-IT Detection</h3>
+            <p>Agentic reasoning links disparate symptoms across IT silos  a slow VPN and a cloud spike  to identify a single root cause in seconds, preventing escalation before tickets are raised.</p>
+            <div class="more-text">The system continuously monitors telemetry patterns to proactively detect unauthorized app usage and misconfigurations. Root cause mapping prevents the same issue recurring by building a permanent institutional memory that survives staff turnover.</div>
+            <button class="expand-btn" onclick="toggleCard(this)">Learn More</button>
+          </div>
+        </div>
+
+        <div class="platform-card">
+          <div class="platform-img-wrap" style="height:220px;">
+            <img src="ai6.jpg" alt="Evidence-Gated Remediation" style="width:100%;height:100%;object-fit:cover;">
+          </div>
+          <div class="inner">
+            <div class="element-badge">Module 03 · EGREE</div>
+            <h3>Evidence-Gated Remediation Execution (EGREE)</h3>
+            <p>The core engine that separates AI confidence from execution authority. System cannot act without verified multi-source evidence  eliminating hallucination risk entirely from live IT environments.</p>
+            <div class="more-text">EGREE synthesizes telemetry, system logs, and CMDB data before granting execution permission. Low-risk issues like password resets and software patching are resolved autonomously. High-risk actions trigger the AOGM for human analyst approval. False positive rate: under 1%.</div>
+            <button class="expand-btn" onclick="toggleCard(this)">Learn More</button>
+          </div>
+        </div>
+
+        <div class="platform-card">
+          <div class="platform-img-wrap" style="height:220px;">
+            <img src="ai7.jpg" alt="Analyst Override Governance" style="width:100%;height:100%;object-fit:cover;">
+          </div>
+          <div class="inner">
+            <div class="element-badge">Module 04 · AOGM</div>
+            <h3>Analyst Override Governance Memory (AOGM)</h3>
+            <p>When humans override an AI decision, the system captures the governance reasoning  not just the fix. This builds a proprietary "Corporate Risk Appetite" dataset unique to each client.</p>
+            <div class="more-text">AOGM transforms the service desk role from manual troubleshooting to high-value governance. Analysts "gate" the AI's most powerful capabilities through structured evidence sets (logs, policy links, risk scores). This memory is permanently owned by the client and cannot be replicated by competitors.</div>
+            <button class="expand-btn" onclick="toggleCard(this)">Learn More</button>
+          </div>
+        </div>
+
+        <div class="platform-card">
+          <div class="platform-img-wrap" style="height:220px;">
+            <img src="ai8.jpg" alt="Privilege Partitioning" style="width:100%;height:100%;object-fit:cover;">
+          </div>
+          <div class="inner">
+            <div class="element-badge">Module 05 · PS-RPF</div>
+            <h3>Privilege-Sensitive Resolution Partitioning (PS-RPF)</h3>
+            <p>Creates a secure "DMZ" for high-stakes actions. Automatically identifies tasks involving administrative credentials or security policies and partitions them into a separate workflow requiring Evidence-Clearance.</p>
+            <div class="more-text">High-stakes actions  modifying firewall rules, granting administrative access, security policy changes  are physically and logically separated from general triage agents. This is the technical moat that protects against social engineering attacks that compromise 93% of current breaches.</div>
+            <button class="expand-btn" onclick="toggleCard(this)">Learn More</button>
+          </div>
+        </div>
+
+        <div class="platform-card">
+          <div class="platform-img-wrap" style="height:220px;">
+            <img src="ai9.jpg" alt="Audit Trail INAGOE" style="width:100%;height:100%;object-fit:cover;">
+          </div>
+          <div class="inner">
+            <div class="element-badge">Module 06 · INAGOE</div>
+            <h3>Governance Output Engine & Audit Shield (INAGOE)</h3>
+            <p>Automatically generates a human-readable "Reasoning Trail" for every action. Ensures EU AI Act Article 12 (Traceability) and Article 13 (Transparency) compliance out-of-the-box.</p>
+            <div class="more-text">Every autonomous decision creates a permanent, auditable trail. IT managers can see not just how many tickets were resolved, but the exact reasoning path the AI took. 100% of pilot actions successfully generated multi-source audit logs. Saves compliance teams 10+ hours per quarterly review.</div>
+            <button class="expand-btn" onclick="toggleCard(this)">Learn More</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Competitor Comparison -->
+  <section class="process-section">
+    <div class="container">
+      <div class="label-tag">Competitive Edge</div>
+      <h2 class="section-h2 dark">Why AI Remediation Group Cannot Be<br>Easily Replicated.</h2>
+      <div class="section-divider divider-blue"></div>
+      <p class="para-dark" style="max-width:680px;">Our Governance-First architecture is inherently difficult to replicate without access to the proprietary logic gates. Competitors focus on making AI "smarter"  we focus on making it "safer."</p>
+      <div style="overflow-x:auto;">
+        <table class="comp-table" style="min-width:600px;">
+          <thead><tr><th>Feature</th><th>Moveworks</th><th>ServiceNow</th><th>Nexthink</th><th>AI Remediation Group</th></tr></thead>
+          <tbody>
+            <tr><td>Execution Logic</td><td>Probabilistic</td><td>Task-based GenAI</td><td>Reactive Scripts</td><td class="highlight-row" style="color:var(--blue-dark);font-weight:700;">Deterministic EGREE</td></tr>
+            <tr><td>Trust Mechanism</td><td>Confidence Scores</td><td>Platform Logs</td><td>Telemetry Only</td><td class="highlight-row" style="color:var(--blue-dark);font-weight:700;">DCP-CLM Evidence Gate</td></tr>
+            <tr><td>Hallucination Risk</td><td>High</td><td>Medium</td><td>N/A</td><td class="highlight-row" style="color:#059669;font-weight:700;">Negligible (&lt;1%)</td></tr>
+            <tr><td>Regulatory Moat</td><td>US Data Privacy</td><td>General Compliance</td><td>Data Sovereignty</td><td class="highlight-row" style="color:var(--blue-dark);font-weight:700;">EU AI Act Art. 12 &amp; 13</td></tr>
+            <tr><td>Human Learning</td><td>NLU Retraining</td><td>RLHF</td><td>Manual Scripting</td><td class="highlight-row" style="color:var(--blue-dark);font-weight:700;">AOGM Governance Memory</td></tr>
+            <tr><td>Target Segment</td><td>Fortune 500</td><td>Enterprise</td><td>Mid-Large Enterprise</td><td class="highlight-row" style="color:var(--blue-dark);font-weight:700;">UK Mid-Market &amp; MSPs</td></tr>
+            <tr><td>Implementation</td><td>High Effort</td><td>Heavy Platform Tax</td><td>Infrastructure Heavy</td><td class="highlight-row" style="color:var(--blue-dark);font-weight:700;">SaaS API-First Plug &amp; Play</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</div><!-- /page-platform -->
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE : PROCESS
+═══════════════════════════════════════════════ -->
+<div class="page" id="page-process">
+  <section style="background:linear-gradient(140deg,#F5F3FF 0%,#EDE9FE 60%,#DDD6FE 100%);padding:clamp(80px,12vw,120px) 0 clamp(60px,8vw,80px);">
+    <div class="container">
+      <div class="label-tag">How It Works</div>
+      <h2 class="section-h2 dark">From Ticket to Triage.<br><span style="color:var(--blue-dark);">Logic to Log. Resolution to Reality.</span></h2>
+      <div class="section-divider divider-blue"></div>
+      <p class="para-dark" style="max-width:680px;">The AI Remediation platform moves beyond static, manual triage. Every incident flows through our Evidence-Gated architecture  from detection to autonomous resolution or governed human escalation  with a complete audit trail at every step.</p>
+    </div>
+  </section>
+
+  <section class="process-section">
+    <div class="container">
+      <div class="label-tag">The Remediation Pipeline</div>
+      <h2 class="section-h2 dark">Six Steps to Zero-Downtime Operations.</h2>
+      <div class="section-divider divider-blue"></div>
+      <div class="process-grid">
+
+        <div class="process-card">
+          <div class="process-num">01</div>
+          <div class="process-icon"><i class="fas fa-satellite-dish"></i></div>
+          <h3>Ingest &amp; Detect</h3>
+          <p>Real-time system telemetry and incident data ingested via API from ITSM tools (ServiceNow, Jira), CMDB, system logs, and infrastructure monitoring. The IIR engine parses biological-technical freshness constraints.</p>
+        </div>
+
+        <div class="process-card">
+          <div class="process-num">02</div>
+          <div class="process-icon"><i class="fas fa-brain"></i></div>
+          <h3>Analyse &amp; Prioritise</h3>
+          <p>Automated root cause mapping links symptoms across silos. Risk-Based Prioritisation ranks incidents by business impact, compliance risk, and infrastructure sensitivity. Access & Identity, Config Drift, Policy Violations identified first.</p>
+        </div>
+
+        <div class="process-card">
+          <div class="process-num">03</div>
+          <div class="process-icon"><i class="fas fa-shield-alt"></i></div>
+          <h3>Evidence Gate Check</h3>
+          <p>The DCP-CLM logic gate independently verifies whether AI confidence and policy-based execution permission align. Without multi-source evidence clearance, no action is executed  regardless of AI confidence level.</p>
+        </div>
+
+        <div class="process-card">
+          <div class="process-num">04</div>
+          <div class="process-icon"><i class="fas fa-robot"></i></div>
+          <h3>Autonomous Remediation</h3>
+          <p>Low-risk, evidence-cleared issues (password resets, software patching, MFA unlocks) are resolved autonomously. Average MTTR reduction: 42%. Each action generates a real-time audit log via INAGOE.</p>
+        </div>
+
+        <div class="process-card">
+          <div class="process-num">05</div>
+          <div class="process-icon"><i class="fas fa-user-shield"></i></div>
+          <h3>Analyst Override Governance</h3>
+          <p>High-stakes actions trigger AOGM  presenting the human analyst with logs, policy links, and risk scores. When analysts override, the governance reasoning is captured, building a permanent Corporate Risk Appetite dataset.</p>
+        </div>
+
+        <div class="process-card">
+          <div class="process-num">06</div>
+          <div class="process-icon"><i class="fas fa-file-alt"></i></div>
+          <h3>Audit &amp; Compliance Trail</h3>
+          <p>INAGOE automatically generates human-readable Reasoning Trails for every action (or refused action). 100% EU AI Act Article 12 &amp; 13 compliant. Audit trails saved compliance teams 10+ hours per quarterly review.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Governance Architecture -->
+  <section class="section-blue">
+    <div class="container">
+      <div class="label-tag-white">Governance Architecture</div>
+      <h2 class="section-h2 white">Built on a Trust Layer Between<br>LLMs and Enterprise Infrastructure.</h2>
+      <div class="section-divider divider-white"></div>
+      <p class="para-light" style="max-width:700px;margin-bottom:40px;">
+        AI Remediation Group acts as a "Trust Layer" between non-deterministic Large Language Models and deterministic enterprise infrastructure  a combination not currently available to UK SME or mid-market segments. The platform is Governance-First, not conversation-first.
+      </p>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-num">&lt;1%</div><div class="stat-lbl">False Positive Rate  thanks to Decoupled Confidence-Permission logic gate</div></div>
+        <div class="stat-card"><div class="stat-num">100%</div><div class="stat-lbl">Of pilot actions generated multi-source audit logs via INAGOE engine</div></div>
+        <div class="stat-card"><div class="stat-num">14hrs</div><div class="stat-lbl">Saved per week per support agent on Level-1 triage in pilot deployments</div></div>
+        <div class="stat-card"><div class="stat-num">4.6/5</div><div class="stat-lbl">User satisfaction for "Operational Trust" in pilot programme across UK firms</div></div>
+      </div>
+    </div>
+  </section>
+</div><!-- /page-process -->
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE : MARKET
+═══════════════════════════════════════════════ -->
+<div class="page" id="page-market">
+  <section style="background:linear-gradient(140deg,#F5F3FF 0%,#EDE9FE 60%,#DDD6FE 100%);padding:clamp(80px,12vw,120px) 0 clamp(60px,8vw,80px);">
+    <div class="container">
+      <div class="label-tag">Market Analysis</div>
+      <h2 class="section-h2 dark">The UK IT Governance Gap.<br><span style="color:var(--blue-dark);">A £120 Billion Market Ready to Disrupt.</span></h2>
+      <div class="section-divider divider-blue"></div>
+      <p class="para-dark" style="max-width:680px;">The global AI in ITSM market grows at 16.72% CAGR  but 40% of agentic AI projects are cancelled by 2027 due to poor risk controls. This creates the precise opening for AI Remediation Group's Governance-First approach.</p>
+    </div>
+  </section>
+
+  <section class="process-section">
+    <div class="container">
+      <div class="label-tag">Market Data</div>
+      <h2 class="section-h2 dark">Data-Validated Market Opportunity.</h2>
+      <div class="section-divider divider-blue"></div>
+      <div class="chart-grid">
+        <div class="chart-box">
+          <h4>Global AI ITSM Market Growth</h4>
+          <p>$12.84B (2025) → $27.81B (2030) at 16.72% CAGR</p>
+          <canvas id="chartGrowth"></canvas>
+        </div>
+        <div class="chart-box">
+          <h4>UK IT Pain Points Distribution</h4>
+          <p>Primary operational pain points for UK IT leaders (2025 survey)</p>
+          <canvas id="chartPain"></canvas>
+        </div>
+        <div class="chart-box">
+          <h4>UK IT Remediation Readiness</h4>
+          <p>Current automation maturity of UK IT market</p>
+          <canvas id="chartReadiness"></canvas>
+        </div>
+        <div class="chart-box">
+          <h4>Competitive Capability Radar</h4>
+          <p>Platform capability comparison vs market incumbents</p>
+          <canvas id="chartRadar"></canvas>
+        </div>
+      </div>
+
+      <div style="margin-top:48px;">
+        <div class="label-tag">Regional Breakdown</div>
+        <h3 class="section-h2 dark" style="font-size:clamp(22px,2.5vw,34px);">UK Geographic Market Concentration.</h3>
+        <div class="section-divider divider-blue"></div>
+        <div class="process-grid" style="margin-top:28px;">
+          <div class="process-card">
+            <div class="process-icon"><i class="fas fa-city"></i></div>
+            <h3>London  38.4% Share</h3>
+            <p>Dominant market for high-value AI Remediation. Tier-1 banks, Fintechs, and 60% of FTSE 100 companies. IT support spend 28% higher than national average. Primary target for 42% of UK-based social engineering attacks.</p>
+          </div>
+          <div class="process-card">
+            <div class="process-icon"><i class="fas fa-code-branch"></i></div>
+            <h3>M4 Corridor &amp; South East  21.5%</h3>
+            <p>Second-largest region. Highest concentration of SaaS and hardware companies in UK. MSPs act as "channel partners" for AI Remediation platforms to scale into SME client bases. High regulatory pressure from financial services HQs.</p>
+          </div>
+          <div class="process-card">
+            <div class="process-icon"><i class="fas fa-building"></i></div>
+            <h3>Northern Powerhouse  Growing Fast</h3>
+            <p>Manchester and Leeds fastest-growing digital hubs outside London. "North Shoring" of IT operations with 35% annual staff turnover creating urgent need for Agentic AI to stabilise operations and preserve institutional knowledge.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-blue">
+    <div class="container">
+      <div class="label-tag-white">Key Market Facts</div>
+      <h2 class="section-h2 white">The Numbers Behind the Opportunity.</h2>
+      <div class="section-divider divider-white"></div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-num">£120B</div><div class="stat-lbl">UK IT services market in 2026  78% have ITSM platforms, 60%+ report weak data governance as barrier to AI production</div></div>
+        <div class="stat-card"><div class="stat-num">210M</div><div class="stat-lbl">IT tickets generated annually in the UK per Service Desk Institute  with 18-22% classified as "Zombie Tasks"</div></div>
+        <div class="stat-card"><div class="stat-num">29.3%</div><div class="stat-lbl">CAGR for "Risk-Aware" AI functions through 2032  outpacing generic automation significantly</div></div>
+        <div class="stat-card"><div class="stat-num">£12.4B</div><div class="stat-lbl">Direct cost of avoidable IT friction to the UK corporate sector every year  our primary addressable loss</div></div>
+      </div>
+    </div>
+  </section>
+</div><!-- /page-market -->
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE : PRICING
+═══════════════════════════════════════════════ -->
+<div class="page" id="page-pricing">
+  <section style="background:linear-gradient(140deg,#F5F3FF 0%,#EDE9FE 60%,#DDD6FE 100%);padding:clamp(80px,12vw,120px) 0 clamp(60px,8vw,80px);">
+    <div class="container">
+      <div class="label-tag">Pricing &amp; Plans</div>
+      <h2 class="section-h2 dark">Governance-First. Enterprise-Grade.<br><span style="color:var(--blue-dark);">Priced for UK Mid-Market.</span></h2>
+      <div class="section-divider divider-blue"></div>
+      <p class="para-dark" style="max-width:640px;">Three tiers designed to scale from basic triage to full Evidence-Gated autonomous remediation. Start with triage, grow into full governance  your trust in the evidence-gates grows with you.</p>
+    </div>
+  </section>
+
+  <section class="process-section">
+    <div class="container">
+      <div class="pricing-grid">
+        <div class="price-card">
+          <div class="price-tier">Starter</div>
+          <div class="price-amount">£500<span>/mo</span></div>
+          <div class="price-sub">Basic Triage · Up to 25 endpoints</div>
+          <hr class="price-divider">
+          <div class="price-feature"><i class="fas fa-check"></i>Multi-Agent Ticket Classification</div>
+          <div class="price-feature"><i class="fas fa-check"></i>Triage Dashboards &amp; Evidence Gathering</div>
+          <div class="price-feature"><i class="fas fa-check"></i>Basic Root Cause Analysis</div>
+          <div class="price-feature"><i class="fas fa-check"></i>ServiceNow / Jira Integration</div>
+          <div class="price-feature"><i class="fas fa-check"></i>Basic Audit Logging</div>
+          <div class="price-feature"><i class="fas fa-check"></i>Email &amp; Chat Support</div>
+          <hr class="price-divider">
+          <button class="btn-primary" style="width:100%;justify-content:center;" onclick="showPage('contact')">Get Started</button>
+        </div>
+
+        <div class="price-card featured">
+          <div class="featured-badge">Most Popular</div>
+          <div class="price-tier">Professional</div>
+          <div class="price-amount">£1,500<span>/mo</span></div>
+          <div class="price-sub">Full Remediation · Unlimited endpoints</div>
+          <hr class="price-divider">
+          <div class="price-feature"><i class="fas fa-check"></i>EGREE  Evidence-Gated Remediation Execution</div>
+          <div class="price-feature"><i class="fas fa-check"></i>Full ITSM Integration (Jira/ServiceNow/Azure DevOps)</div>
+          <div class="price-feature"><i class="fas fa-check"></i>Privilege-Sensitive Resolution Partitioning</div>
+          <div class="price-feature"><i class="fas fa-check"></i>Automated Root Cause Mapping</div>
+          <div class="price-feature"><i class="fas fa-check"></i>Shadow-IT Detection &amp; Proactive Alerts</div>
+          <div class="price-feature"><i class="fas fa-check"></i>Priority Support &amp; Onboarding</div>
+          <hr class="price-divider">
+          <button class="btn-primary" style="width:100%;justify-content:center;" onclick="showPage('contact')">Start Free Trial</button>
+        </div>
+
+        <div class="price-card">
+          <div class="price-tier">Enterprise</div>
+          <div class="price-amount">£3,000<span>+/mo</span></div>
+          <div class="price-sub">Unlimited Agents · Custom governance</div>
+          <hr class="price-divider">
+          <div class="price-feature"><i class="fas fa-check"></i>AOGM  Analyst Override Governance Memory</div>
+          <div class="price-feature"><i class="fas fa-check"></i>INAGOE  Full AI Act Audit Trails</div>
+          <div class="price-feature"><i class="fas fa-check"></i>Custom Privilege Gates &amp; Policy Mapping</div>
+          <div class="price-feature"><i class="fas fa-check"></i>EU AI Act Art. 12 &amp; 13 Compliance Pack</div>
+          <div class="price-feature"><i class="fas fa-check"></i>Community Governance Network (CGN) Access</div>
+          <div class="price-feature"><i class="fas fa-check"></i>Dedicated Customer Success Manager</div>
+          <hr class="price-divider">
+          <button class="btn-primary" style="width:100%;justify-content:center;" onclick="showPage('contact')">Contact Sales</button>
+        </div>
+      </div>
+
+      <div style="margin-top:56px;">
+        <div class="label-tag">Additional Services</div>
+        <h3 class="section-h2 dark" style="font-size:clamp(22px,2.5vw,34px);">Professional &amp; Compliance Services.</h3>
+        <div class="section-divider divider-blue"></div>
+        <div class="process-grid" style="margin-top:28px;">
+          <div class="process-card">
+            <div class="process-icon"><i class="fas fa-plug"></i></div>
+            <h3>Implementation Services</h3>
+            <p>One-time integration with your existing ITSM stack, CMDB, and cloud environments. £5,000–£15,000 per deployment depending on complexity. Includes API configuration and pilot validation.</p>
+          </div>
+          <div class="process-card">
+            <div class="process-icon"><i class="fas fa-file-contract"></i></div>
+            <h3>Governance &amp; Audit Reports</h3>
+            <p>Premium annual subscription for auditable "Reasoning Trails" for AI Act and ESG compliance. £2,000–£5,000 per year per organisation. Includes quarterly compliance review and documentation.</p>
+          </div>
+          <div class="process-card">
+            <div class="process-icon"><i class="fas fa-code"></i></div>
+            <h3>Custom Agent Development</h3>
+            <p>Specialized R&amp;D services to build bespoke "Evidence-Gates" for proprietary or legacy corporate software. £10,000+ per specialized agent workflow. Tailored to your unique infrastructure.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- /page-pricing -->
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE : ABOUT
+═══════════════════════════════════════════════ -->
+<div class="page" id="page-about">
+  <section style="background:linear-gradient(140deg,#F5F3FF 0%,#EDE9FE 60%,#DDD6FE 100%);padding:clamp(80px,12vw,120px) 0 clamp(60px,8vw,80px);">
+    <div class="container">
+      <div class="label-tag">About Us</div>
+      <h2 class="section-h2 dark">Built by Someone Who Lived<br><span style="color:var(--blue-dark);">the Problem Every Day.</span></h2>
+      <div class="section-divider divider-blue"></div>
+      <p class="para-dark" style="max-width:680px;">AI Remediation Group was founded by Swathi Ginukuntla, a veteran Service Desk Analyst and PMO Analyst who experienced first-hand the operational friction, hallucination risks, and governance gaps that define modern UK IT service desks.</p>
+    </div>
+  </section>
+
+  <section class="process-section">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-img-wrap">
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=80" alt="Swathi - Founder & CEO">
+        </div>
+        <div>
+          <div class="label-tag">Founder &amp; CEO</div>
+          <div class="founder-name">Swathi Ginukuntla</div>
+          <div class="founder-role">Founder &amp; CEO · AI Remediation Group</div>
+          <p class="para-dark" style="font-size:15px;margin-bottom:16px;">
+            "We believe every issue has a fix  and AI can find it, recommend it, and resolve it. But only when it's evidence-gated, governed, and auditable. That's what we built."
+          </p>
+          <p class="para-dark" style="font-size:14px;margin-bottom:16px;">
+            Swathi holds a Master's in Business Information Technology from Edinburgh Napier University and a Bachelor's in Computer Science & Engineering. Her tenure as a Service Desk Analyst and PMO Analyst at Tata Consultancy Services (TCS) provides a rare combination of frontline troubleshooting and high-level project governance expertise.
+          </p>
+          <p class="para-dark" style="font-size:14px;">
+            Having personally managed thousands of Level-1 and Level-2 tickets, Swathi understands the specific incidents where current "black-box" AI fails  MFA resets, access provisioning, config drift  and designed AI Remediation Group to solve exactly these problems with evidence-gating, not guesswork.
+          </p>
+          <div class="skill-chips">
+            <span class="skill-chip">Active Directory</span>
+            <span class="skill-chip">ServiceNow</span>
+            <span class="skill-chip">Jira</span>
+            <span class="skill-chip">Azure DevOps</span>
+            <span class="skill-chip">SCCM</span>
+            <span class="skill-chip">PMO Governance</span>
+            <span class="skill-chip">EU AI Act</span>
+            <span class="skill-chip">UK GDPR</span>
+            <span class="skill-chip">ITSM Architecture</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:64px;">
+        <div class="label-tag">Our Values</div>
+        <h3 class="section-h2 dark" style="font-size:clamp(22px,2.5vw,34px);">Core Values That Drive Every Decision.</h3>
+        <div class="section-divider divider-blue"></div>
+        <div class="process-grid" style="margin-top:28px;">
+          <div class="process-card">
+            <div class="process-icon"><i class="fas fa-lightbulb"></i></div>
+            <h3>Innovation</h3>
+            <p>Continuous refinement of Ticket-to-Resolution models to stay ahead of volatile cybersecurity threats and shifting infrastructure patterns.</p>
+          </div>
+          <div class="process-card">
+            <div class="process-icon"><i class="fas fa-bullseye"></i></div>
+            <h3>Accuracy</h3>
+            <p>A commitment to technical integrity and the elimination of "remediation-matching" errors in automated IT service delivery through evidence-gating.</p>
+          </div>
+          <div class="process-card">
+            <div class="process-icon"><i class="fas fa-lock"></i></div>
+            <h3>Sovereignty</h3>
+            <p>Empowering independent IT teams to own their operational governance logic as a proprietary and permanent business asset.</p>
+          </div>
+          <div class="process-card">
+            <div class="process-icon"><i class="fas fa-bolt"></i></div>
+            <h3>Efficiency</h3>
+            <p>Making complex multi-vendor infrastructure manageable through machine-executable paths and low-friction API integrations with existing ITSM tools.</p>
+          </div>
+          <div class="process-card">
+            <div class="process-icon"><i class="fas fa-users"></i></div>
+            <h3>Empowerment</h3>
+            <p>Equipping service desk managers with the automated foresight needed to achieve operational stability without headcount-proportional management costs.</p>
+          </div>
+          <div class="process-card">
+            <div class="process-icon"><i class="fas fa-balance-scale"></i></div>
+            <h3>Compliance</h3>
+            <p>Building "Auditability by Design"  every AI decision traced, every governance override captured, every action aligned with EU AI Act and UK GDPR mandates.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission & Vision -->
+  <section class="section-blue">
+    <div class="container">
+      <div class="label-tag-white">Mission &amp; Vision</div>
+      <h2 class="section-h2 white">From Manual Monitoring<br>to Automated Orchestration.</h2>
+      <div class="section-divider divider-white"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:16px;">
+        <div>
+          <div style="font-family:var(--mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:12px;">Mission Statement</div>
+          <p class="para-light" style="font-size:16px;">To enable UK IT departments and MSPs to move from "manual monitoring" to "automated orchestration" by leveraging an evidence-aware remediation compiler that eliminates the orchestration gap and protects institutional high-street memory.</p>
+        </div>
+        <div>
+          <div style="font-family:var(--mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:12px;">Vision Statement</div>
+          <p class="para-light" style="font-size:16px;">To be the global standard for "Governed IT Orchestration"  a future in which IT incidents are automatically synchronized with biological-technical intent and real-time system signals, ensuring continuous digital resilience and zero-downtime operations.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- /page-about -->
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE : FAQ
+═══════════════════════════════════════════════ -->
+<div class="page" id="page-faq">
+  <section style="background:linear-gradient(140deg,#F5F3FF 0%,#EDE9FE 60%,#DDD6FE 100%);padding:clamp(80px,12vw,120px) 0 clamp(60px,8vw,80px);">
+    <div class="container">
+      <div class="label-tag">FAQ</div>
+      <h2 class="section-h2 dark">Frequently Asked Questions.<br><span style="color:var(--blue-dark);">Everything You Need to Know.</span></h2>
+      <div class="section-divider divider-blue"></div>
+      <p class="para-dark" style="max-width:640px;">Common questions from UK IT Directors, Service Desk Managers, and CTOs about the AI Remediation Group platform.</p>
+    </div>
+  </section>
+
+  <section class="process-section">
+    <div class="container" style="max-width:720px;">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">What is Evidence-Gated Remediation and why does it matter? <span class="faq-icon"><i class="fas fa-plus"></i></span></button>
+        <div class="faq-a">Evidence-Gated Remediation means the AI cannot act on confidence alone. Before executing any fix, our EGREE engine synthesizes multi-source evidence  real-time telemetry, system logs, and CMDB data  to verify the ground truth. This eliminates "AI hallucinations" (the 15-20% error rate of ungoverned LLMs in technical troubleshooting) from your live IT environment entirely.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">How does AI Remediation Group differ from ServiceNow or Moveworks? <span class="faq-icon"><i class="fas fa-plus"></i></span></button>
+        <div class="faq-a">ServiceNow is a powerful platform but carries heavy "platform tax"  too expensive and complex for UK mid-market. Moveworks focuses on NLU (understanding users) but uses probabilistic confidence scores, not evidence. We use deterministic Evidence-Gating, are specifically aligned with EU AI Act Articles 12 & 13, and deploy as a plug-and-play SaaS API  not a multi-year platform implementation.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">Is the platform compliant with the EU AI Act? <span class="faq-icon"><i class="fas fa-plus"></i></span></button>
+        <div class="faq-a">Yes. The INAGOE engine is specifically designed to meet EU AI Act mandates for "High-Risk AI" traceability (Article 12) and transparency (Article 13). Every autonomous action generates a human-readable Reasoning Trail automatically. The platform also meets UK GDPR Article 22 requirements for automated individual decision-making. Compliance is built in, not bolted on.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">What results have pilot deployments shown? <span class="faq-icon"><i class="fas fa-plus"></i></span></button>
+        <div class="faq-a">Across 5 UK-based pilot organisations over 10 weeks: 96.4% remediation accuracy for Evidence-Cleared actions; 42% average MTTR reduction; 14 hours saved per support agent per week on Level-1 triage; 100% of actions generated multi-source audit logs; 4.6/5 user satisfaction for "Operational Trust"; and audit trails saved compliance teams 10+ hours per quarterly review.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">How does the Analyst Override Governance Memory (AOGM) work? <span class="faq-icon"><i class="fas fa-plus"></i></span></button>
+        <div class="faq-a">When a human analyst overrides an AI decision, AOGM doesn't just log the fix  it records the governance reasoning behind the override. This creates a "Governance Memory" that trains the system on your corporate risk appetite, not just technical steps. This memory is proprietary to your organisation and cannot be replicated by competitors  it's permanent institutional intelligence.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">What ITSM tools does the platform integrate with? <span class="faq-icon"><i class="fas fa-plus"></i></span></button>
+        <div class="faq-a">AI Remediation Group integrates via API-first design with ServiceNow, Jira Service Management, Azure DevOps, Freshservice, and Zendesk in Year 1. The platform uses pre-configured "Integration Blueprints"  sector-specific templates that keep onboarding costs low. Self-Service API integration enables IT departments to onboard their own telemetry sources in days, not months.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">How is sensitive IT log data protected? <span class="faq-icon"><i class="fas fa-plus"></i></span></button>
+        <div class="faq-a">Privilege-Sensitive Resolution Partitioning (PS-RPF) processes sensitive data locally where possible. All cloud-based benchmarking uses the Community Governance Network (CGN) for anonymised, aggregated learning  your sensitive infrastructure data is never centralised or shared. The platform is Cyber Essentials Plus compliant and aligned with UK GDPR data minimisation principles.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">Is there a pilot or trial programme available? <span class="faq-icon"><i class="fas fa-plus"></i></span></button>
+        <div class="faq-a">Yes. We offer a 14-day "Shadow Pilot"  during this phase, the AI maps evidence to incoming tickets in the background without executing fixes, demonstrating a measurable 40% potential MTTR reduction to stakeholders before any paid commitment. Following this, formal pilot deployments run for 10 weeks with KPI tracking for MTTR reduction, governance compliance, and user satisfaction.</div>
+      </div>
+    </div>
+  </section>
+</div><!-- /page-faq -->
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE : CONTACT
+═══════════════════════════════════════════════ -->
+<div class="page" id="page-contact">
+  <section style="background:linear-gradient(140deg,#F5F3FF 0%,#EDE9FE 60%,#DDD6FE 100%);padding:clamp(80px,12vw,120px) 0 clamp(60px,8vw,80px);">
+    <div class="container">
+      <div class="label-tag">Contact Us</div>
+      <h2 class="section-h2 dark">Request a Demo.<br><span style="color:var(--blue-dark);">Start Your Governance Journey.</span></h2>
+      <div class="section-divider divider-blue"></div>
+      <p class="para-dark" style="max-width:640px;">Speak to our team about a 14-day Shadow Pilot, full platform demo, or pilot programme. We serve UK enterprise IT departments, MSPs, and regulated firms in Finance, Legal, and Healthcare.</p>
+    </div>
+  </section>
+
+  <section class="process-section">
+    <div class="container">
+      <div class="contact-grid">
+        <div>
+          <div class="contact-info">
+            <div class="contact-info-card">
+              <div class="contact-info-icon"><i class="fas fa-envelope"></i></div>
+              <div class="contact-info-text">
+                <strong>Email</strong>
+                <span>hello@airemediationgroup.co.uk</span>
+              </div>
+            </div>
+            <div class="contact-info-card">
+              <div class="contact-info-icon"><i class="fas fa-map-marker-alt"></i></div>
+              <div class="contact-info-text">
+                <strong>Headquarters</strong>
+                <span>London &amp; Edinburgh, United Kingdom</span>
+              </div>
+            </div>
+            <div class="contact-info-card">
+              <div class="contact-info-icon"><i class="fas fa-clock"></i></div>
+              <div class="contact-info-text">
+                <strong>Response Time</strong>
+                <span>We respond within 1 business day to all demo requests</span>
+              </div>
+            </div>
+            <div class="contact-info-card">
+              <div class="contact-info-icon"><i class="fas fa-shield-alt"></i></div>
+              <div class="contact-info-text">
+                <strong>Compliance</strong>
+                <span>UK GDPR · EU AI Act · Cyber Essentials Plus · ISO 42001</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:32px;background:#fff;border:1px solid rgba(107,63,160,0.15);border-radius:16px;padding:24px;box-shadow:0 2px 12px rgba(107,63,160,0.06);">
+            <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--blue-dim);margin-bottom:12px;">Pilot Programme Results</div>
+            <div class="score-row"><div class="score-icon blue-bg">MT</div><span class="score-lbl">MTTR Reduction</span><span class="score-val">42% avg</span></div>
+            <div class="score-row"><div class="score-icon green-bg">RA</div><span class="score-lbl">Remediation Accuracy</span><span class="score-val">96.4%</span></div>
+            <div class="score-row"><div class="score-icon light-bg">GI</div><span class="score-lbl">Governance Integrity</span><span class="score-val">100%</span></div>
+            <div class="score-row" style="border:none;"><div class="score-icon blue-bg">US</div><span class="score-lbl">User Satisfaction</span><span class="score-val">4.6/5</span></div>
+          </div>
+        </div>
+
+        <div class="contact-form-wrap">
+          <h3 style="font-family:var(--display);font-size:22px;font-weight:700;color:var(--text-dark);margin-bottom:6px;">Request a Demo</h3>
+          <p style="font-size:13px;color:var(--text-muted);margin-bottom:24px;font-family:var(--mono);">Start with a 14-day Shadow Pilot  no commitment required</p>
+          <div class="form-row"><label>Full Name</label><input type="text" placeholder="Your full name"></div>
+          <div class="form-row"><label>Work Email</label><input type="email" placeholder="you@company.co.uk"></div>
+          <div class="form-row"><label>Company Name</label><input type="text" placeholder="Your organisation"></div>
+          <div class="form-row"><label>Role</label>
+            <select>
+              <option>IT Director / CTO</option>
+              <option>Service Desk Manager</option>
+              <option>MSP Owner / Director</option>
+              <option>Head of IT Operations</option>
+              <option>Compliance Officer</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-row"><label>Current ITSM Stack</label>
+            <select>
+              <option>ServiceNow</option>
+              <option>Jira Service Management</option>
+              <option>Freshservice</option>
+              <option>Zendesk</option>
+              <option>Azure DevOps</option>
+              <option>Other / In-House</option>
+            </select>
+          </div>
+          <div class="form-row"><label>What's Your Biggest IT Challenge?</label><textarea placeholder="Describe your current pain points  hallucination risk, compliance burden, MTTR, ticket volume..."></textarea></div>
+          <button class="form-submit-btn">Submit Demo Request →</button>
+          <p style="text-align:center;font-size:11px;color:var(--text-light);margin-top:14px;font-family:var(--mono);">UK GDPR Compliant · Your data is never sold or shared</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+      </div>
+    </div>
+  </section>
+</div><!-- /page-contact -->
+
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <div class="footer-logo-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        AI Remediation Group
+      </div>
+      <p class="footer-desc">Evidence-Governed Autonomous IT Remediation & Decision Control Platform. Built for UK enterprise IT departments and MSPs who demand governance-first AI automation.</p>
+      <div class="footer-badges">
+        <span class="footer-badge">EU AI Act Compliant</span>
+        <span class="footer-badge">UK GDPR</span>
+        <span class="footer-badge">ISO 42001</span>
+        <span class="footer-badge">Cyber Essentials+</span>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Platform</div>
+      <div class="footer-col">
+        <a onclick="showPage('platform')">EGREE Engine</a>
+        <a onclick="showPage('platform')">AOGM System</a>
+        <a onclick="showPage('platform')">PS-RPF Partitioning</a>
+        <a onclick="showPage('platform')">INAGOE Audit Engine</a>
+        <a onclick="showPage('platform')">DCP-CLM Logic Gate</a>
+        <a onclick="showPage('platform')">Community Governance Network</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <div class="footer-col">
+        <a onclick="showPage('about')">About AI Remediation Group</a>
+        <a onclick="showPage('about')">Swathi · Founder &amp; CEO</a>
+        <a onclick="showPage('process')">How It Works</a>
+        <a onclick="showPage('faq')">FAQ</a>
+        <a onclick="showPage('market')">Market Analysis</a>
+        <a onclick="showPage('pricing')">Pricing &amp; Plans</a>
+        <a onclick="showPage('contact')">Request a Demo</a>
+        <a onclick="showPage('contact')">Shadow Pilot Programme</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Solutions</div>
+      <div class="footer-col">
+        <a onclick="showPage('platform')">UK Enterprise IT Departments</a>
+        <a onclick="showPage('platform')">Managed Service Providers (MSPs)</a>
+        <a onclick="showPage('platform')">Financial &amp; Legal Firms</a>
+        <a onclick="showPage('platform')">Healthcare IT</a>
+        <a onclick="showPage('pricing')">Starter · £500/mo</a>
+        <a onclick="showPage('pricing')">Professional · £1,500/mo</a>
+        <a onclick="showPage('pricing')">Enterprise · £3,000+/mo</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom-bar">
+    <p>© 2026 <span>AI Remediation Group</span> · London &amp; Edinburgh, UK · UK GDPR Compliant · Founded by Swathi Ginukuntla</p>
+    <div class="footer-bottom-links">
+      <a onclick="showPage('contact')">Privacy Policy</a>
+      <a onclick="showPage('contact')">Terms of Service</a>
+      <a onclick="showPage('contact')">Confidential Business Plan</a>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════ JAVASCRIPT ═══════════ -->
+<script>
+/* ─── PAGE NAV ───────────────────────────────── */
+function showPage(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-links button').forEach(b=>b.classList.remove('active'));
+  const pg=document.getElementById('page-'+name);
+  if(pg){pg.classList.add('active');}
+  const btn=document.getElementById('nav-'+name);
+  if(btn){btn.classList.add('active');}
+  window.scrollTo({top:0,behavior:'instant'});
+  if(name==='market'&&!window.marketChartsLoaded){initMarketCharts();window.marketChartsLoaded=true;}
+}
+
+function toggleCard(btn){
+  const card=btn.closest('.platform-card');
+  card.classList.toggle('open');
+  btn.innerHTML=card.classList.contains('open')?'Show Less ▲':'Learn More ▼';
+}
+
+function toggleFAQ(btn){
+  const item=btn.parentElement;
+  const icon=btn.querySelector('.faq-icon i');
+  item.classList.toggle('open');
+  icon.className=item.classList.contains('open')?'fas fa-minus':'fas fa-plus';
+}
+
+function closeMobile(){
+  document.getElementById('mobileNav').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+}
+
+document.getElementById('hamburger').addEventListener('click',function(){
+  this.classList.toggle('open');
+  document.getElementById('mobileNav').classList.toggle('open');
+});
+
+/* ─── CHART THEME ────────────────────────────── */
+const BLU='rgba(107,63,160,1)';
+const BLU2='rgba(107,63,160,0.7)';
+const BLU3='rgba(107,63,160,0.35)';
+const LBLU='rgba(167,139,250,0.9)';
+const LBLU2='rgba(196,181,253,0.7)';
+const GRID='rgba(107,63,160,0.08)';
+const MUTED='rgba(61,26,110,0.8)';
+
+Chart.defaults.font.family="'IBM Plex Mono', monospace";
+Chart.defaults.font.size=11;
+Chart.defaults.color=MUTED;
+
+/* ─── MARKET CHARTS ──────────────────────────── */
+function initMarketCharts(){
+  // Global ITSM Market Growth
+  new Chart(document.getElementById('chartGrowth').getContext('2d'),{
+    type:'bar',
+    data:{
+      labels:['2022','2023','2024','2025','2026','2028','2030'],
+      datasets:[
+        {label:'Global AI ITSM Market ($B)',data:[6,9,11,12.84,17,22,27.81],backgroundColor:BLU2,borderRadius:5,barPercentage:0.55},
+        {type:'line',label:'UK AI Adoption %',data:[null,3,7,12,20,34,55],borderColor:LBLU,borderWidth:2,yAxisID:'y2',tension:0.4,pointBackgroundColor:LBLU,fill:false}
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:MUTED,boxWidth:10,padding:12,font:{size:10}}}},scales:{x:{grid:{display:false},ticks:{color:MUTED}},y:{grid:{color:GRID},ticks:{color:MUTED,callback:v=>'$'+v+'B'}},y2:{position:'right',grid:{display:false},ticks:{color:MUTED,callback:v=>v+'%'}}}}
+  });
+
+  // Pain Points Doughnut
+  new Chart(document.getElementById('chartPain').getContext('2d'),{
+    type:'doughnut',
+    data:{
+      labels:['Black Box AI Concern (82%)','Trust Barrier (68%)','Compliance Fatigue (74%)','Hallucination Risk (65%)','Manual Overhead (75%)'],
+      datasets:[{
+        data:[82,68,74,65,75],
+        backgroundColor:[BLU,BLU2,BLU3,LBLU,LBLU2],
+        borderWidth:1.5
+      }]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:MUTED,boxWidth:10,padding:10,font:{size:10}}}}}
+  });
+
+  // Readiness Bar
+  new Chart(document.getElementById('chartReadiness').getContext('2d'),{
+    type:'bar',
+    data:{
+      labels:['Manual/Reactive','Basic Scripts','Chatbots','Agentic/Autonomous'],
+      datasets:[{
+        label:'UK Market Maturity (%)',
+        data:[52,29,14,5],
+        backgroundColor:[BLU3,BLU2,BLU,LBLU],
+        borderRadius:6,barPercentage:0.6
+      }]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{color:MUTED}},y:{grid:{color:GRID},ticks:{color:MUTED,callback:v=>v+'%'}}}}
+  });
+
+  // Competitive Radar
+  new Chart(document.getElementById('chartRadar').getContext('2d'),{
+    type:'radar',
+    data:{
+      labels:['Evidence-Gating','Hallucination Control','Regulatory Alignment','Governance Memory','Privilege Partitioning','UK Mid-Market Fit'],
+      datasets:[
+        {label:'AI Remediation Group',data:[5,5,5,5,5,5],backgroundColor:'rgba(107,63,160,0.1)',borderColor:BLU,borderWidth:2,pointBackgroundColor:BLU},
+        {label:'Moveworks',data:[1,2,2,1,1,3],backgroundColor:'rgba(167,139,250,0.06)',borderColor:LBLU,borderWidth:1.5,pointBackgroundColor:LBLU},
+        {label:'ServiceNow',data:[2,2,3,2,2,2],backgroundColor:'rgba(107,63,160,0.04)',borderColor:'rgba(107,63,160,0.5)',borderWidth:1.5,pointBackgroundColor:'rgba(107,63,160,0.5)'},
+        {label:'Nexthink',data:[1,1,2,1,1,2],backgroundColor:'rgba(61,26,110,0.04)',borderColor:'rgba(61,26,110,0.4)',borderWidth:1.5,pointBackgroundColor:'rgba(61,26,110,0.4)'},
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:MUTED,boxWidth:10,padding:14,font:{size:10}}}},scales:{r:{backgroundColor:'rgba(107,63,160,0.01)',grid:{color:GRID},pointLabels:{color:MUTED,font:{size:10}},ticks:{display:false},min:0,max:5}}}
+  });
+}
+</script>
+</body>
+</html>
