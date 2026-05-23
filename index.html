@@ -600,24 +600,51 @@ footer{background:var(--footer-bg);padding:clamp(48px,8vw,80px) 0 0;}
 
   /* Platform 2-col page grid → single col on tablet */
   .platform-grid-2col{grid-template-columns:1fr !important;}
+
+  /* Buttons: bigger tap targets on tablet */
+  .btn-primary,.btn-secondary,.btn-white{
+    padding:14px 24px;font-size:12px;min-height:48px;
+  }
+  /* Hero button row: wrap and stretch on tablet */
+  .hero-btns{gap:12px;}
 }
 @media(max-width:600px){
   .stats-grid,.platform-grid,.process-grid,.pricing-grid,.chart-grid{grid-template-columns:1fr;}
   .footer-inner{grid-template-columns:1fr;}
 
-  /* Platform cards: full width, tighter padding on mobile */
+  /* Platform cards */
   .platform-card .inner{padding:18px;}
   .platform-card h3{font-size:16px;}
   .platform-img-wrap{height:160px;}
 
-  /* Market charts further tightened on small screens */
+  /* Market charts */
   .chart-grid{gap:14px;}
   .chart-box{padding:14px;}
   .chart-box h4{font-size:14px;}
   .chart-box canvas{height:170px!important;}
 
-  /* Mission & Vision: stack on mobile */
+  /* Mission & Vision */
   .mission-vision-grid{grid-template-columns:1fr !important;gap:28px !important;}
+
+  /* ── All buttons: full-width, generous tap target on mobile ── */
+  .btn-primary,.btn-secondary,.btn-white{
+    width:100%;justify-content:center;
+    padding:15px 20px;font-size:13px;min-height:52px;
+  }
+  /* Button groups stack vertically */
+  .hero-btns{flex-direction:column;gap:12px;}
+
+  /* Expand "Learn More" button: bigger tap area */
+  .expand-btn{
+    padding:10px 0;font-size:11px;min-height:44px;
+    display:flex;align-items:center;
+  }
+
+  /* Form submit already full-width — just ensure tap height */
+  .form-submit-btn{padding:16px;font-size:13px;min-height:52px;}
+
+  /* Pricing buttons already have width:100% inline — ensure height */
+  .price-card .btn-primary{min-height:52px;}
 }
 
 /* ─── DESKTOP ENHANCEMENTS (1100px+) ─────────────────── */
